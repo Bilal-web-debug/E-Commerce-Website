@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - E-commerce Website</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.cart {
+    padding: 20px;
+    margin: 20px;
+}
+
+.cart h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.cart-table th, .cart-table td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.cart-table th {
+    background-color: #f4f4f4;
+}
+
+.cart-table td img {
+    width: 50px;
+    height: auto;
+}
+
+.cart-summary {
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+.cart-summary .subtotal, .cart-summary .taxes, .cart-summary .discount, .cart-summary .total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.proceed-checkout {
+    background-color: #ff6347;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.proceed-checkout:hover {
+    background-color: #ff4500;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">E-Shop</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="product.html">Products</a></li>
+                <li><a href="product-detail.html">Products Detail</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Cart Section -->
+    <section class="cart">
+        <h1>Your Shopping Cart</h1>
+
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                <!-- Cart Items will be dynamically populated by JavaScript -->
+            </tbody>
+        </table>
+
+        <div class="cart-summary">
+            <div class="subtotal">
+                <span>Subtotal:</span> <span id="subtotal">$0.00</span>
+            </div>
+            <div class="taxes">
+                <span>Taxes (10%):</span> <span id="taxes">$0.00</span>
+            </div>
+            <div class="discount">
+                <span>Discount:</span> <span id="discount">$0.00</span>
+            </div>
+            <div class="total">
+                <span>Total:</span> <span id="total">$0.00</span>
+            </div>
+            <button class="proceed-checkout" id="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 E-Shop. All rights reserved.</p>
+    </footer>
+
+    <script >
+        // Example cart data (This would usually come from local storage or a backend database)
+let cartItems = [
+    {
+        id: 1,
+        name: 'Product 1',
+        price: 50.00,
+        quantity: 2,
+        image: 'assets/images/product1.jpg'
+    },
+    {
+        id: 2,
+        name: 'Product 2',
+        price: 30.00,
+        quantity: 1,
+        image: 'assets/images/product2.jpg'
+    }
+];
+
+// Function to update cart totals (subtotal, taxes, discount, total)
+function updateCartSummary() {
+    let subtotal = 0;
+    let discount = 0;
+    let taxRate = 0.10;  // 10% tax
+
+    cartItems.forEach(item => {
+        subtotal += item.price * item.quantity;
+    });
+
+    let taxes = subtotal * taxRate;
+    let total = subtotal + taxes - discount;
+
+    document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById('taxes').textContent = `$${taxes.toFixed(2)}`;
+    document.getElementById('discount').textContent = `$${discount.toFixed(2)}`;
+    document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+}
+
+// Function to update cart items display
+function updateCartItems() {
+    const cartItemsContainer = document.getElementById('cart-items');
+    cartItemsContainer.innerHTML = '';
+
+    cartItems.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><img src="${item.image}" alt="${item.name}"><br>${item.name}</td>
+            <td>$${item.price.toFixed(2)}</td>
+            <td>
+                <input type="number" value="${item.quantity}" min="1" class="quantity" data-id="${item.id}">
+            </td>
+            <td>$${(item.price * item.quantity).toFixed(2)}</td>
+            <td><button class="remove-item" data-id="${item.id}">Remove</button></td>
+        `;
+        cartItemsContainer.appendChild(row);
+    });
+
+    // Update cart summary
+    updateCartSummary();
+}
+
+// Handle updating quantities
+document.addEventListener('input', function(event) {
+    if (event.target.classList.contains('quantity')) {
+        const itemId = event.target.getAttribute('data-id');
+        const newQuantity = parseInt(event.target.value);
+
+        const item = cartItems.find(item => item.id == itemId);
+        if (item) {
+            item.quantity = newQuantity;
+        }
+        updateCartItems();
+});
+
+// Handle removing items
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('remove-item')) {
+        const itemId = event.target.getAttribute('data-id');
+        cartItems = cartItems.filter(item => item.id != itemId);
+        updateCartItems();
+    }
+});
+
+// Handle checkout button
+document.getElementById('checkout-btn').addEventListener('click', function() {
+    window.location.href = 'checkout.html'; // Redirect to checkout page
+});
+
+// Initial page load: Update cart items and summary
+updateCartItems();
+
+    </script>
+</body>
+</html>

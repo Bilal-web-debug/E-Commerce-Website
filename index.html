@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - E-commerce Website</title>
+    
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.hero {
+    
+    background-size: contain;
+    text-align: center;
+    padding: 1px 0;
+    color: rgb(3, 3, 3);
+}
+
+.hero h1 {
+    font-size: 3rem;
+}
+
+.hero .cta {
+    margin-top: 100px; /* Adjust this value as needed */
+    padding: 10px 20px;
+    background-color: #ff6347;
+    color: white;
+    text-decoration: none;
+}
+
+.product-categories {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.category-cards {
+    display: flex;
+    justify-content: space-around;
+}
+
+.category-card {
+    width: 30%;
+    background-color: #f1f1f1;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    
+}
+
+
+.featured-products {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.product-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+}
+
+.add-to-cart {
+    background-color: #ff6347;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.add-to-cart:hover {
+    background-color: #ff4500;
+}
+
+.testimonials {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #f1f1f1;
+}
+
+.testimonial-slider {
+    display: flex;
+    overflow-x: auto;
+}
+
+.testimonial {
+    margin: 0 20px;
+    width: 250px;
+}
+
+.testimonial p {
+    font-style: italic;
+}
+
+.newsletter {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.newsletter input {
+    padding: 10px;
+    margin-right: 10px;
+    width: 250px;
+}
+
+.newsletter button {
+    padding: 10px 20px;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">E-Shop</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="product.html">Products</a></li>
+                <li><a href="product-detail.html">Products Detail</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="hero-bg.jpg" alt="">
+            <h1>Shop the Latest Fashion Trends</h1>
+            <p>Find the best deals on trendy products for you</p>
+            <a href="product.html" class="cta">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Product Categories -->
+    <section class="product-categories">
+        <h2>Shop by Categories</h2>
+        <div class="category-cards">
+            <div class="category-card">
+                <img src="category1.jpg" alt="Category 1">
+                <h3>Category 1</h3>
+            </div>
+            <div class="category-card">
+                <img src="category2.jpg" alt="Category 2">
+                <h3>Category 2</h3>
+            </div>
+            <div class="category-card">
+                <img src="category3.jpg" alt="Category 3">
+                <h3>Category 3</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="product1.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p>$99.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="product2.jpg" alt="Product 2">
+                <h3>Product 2</h3>
+                <p>$79.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="product3.jpg" alt="Product 3">
+                <h3>Product 3</h3>
+                <p>$59.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <h2>Customer Reviews</h2>
+        <div class="testimonial-slider">
+            <div class="testimonial">
+                <p>"Great products and fast delivery!"</p>
+                <h4>- John Doe</h4>
+            </div>
+            <div class="testimonial">
+                <p>"I love the quality of the items. Highly recommend!"</p>
+                <h4>- Sarah Smith</h4>
+            </div>
+            <div class="testimonial">
+                <p>"Amazing shopping experience, will buy again."</p>
+                <h4>- James Lee</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Sign-Up -->
+    <section class="newsletter">
+        <h2>Sign Up for Updates</h2>
+        <form id="newsletter-form">
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <button type="submit" class="cta">Subscribe</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 E-Shop. All rights reserved.</p>
+    </footer>
+
+    <script >// Testimonials Slider
+        let currentIndex = 0;
+        const testimonials = document.querySelectorAll('.testimonial');
+        const totalTestimonials = testimonials.length;
+        
+        setInterval(() => {
+            testimonials[currentIndex].style.display = 'none';
+            currentIndex = (currentIndex + 1) % totalTestimonials;
+            testimonials[currentIndex].style.display = 'block';
+        }, 3000); // Change testimonial every 3 seconds
+        
+        // Newsletter Form Validation
+        document.getElementById('newsletter-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            if (email) {
+                alert('Thank you for subscribing!');
+                document.getElementById('email').value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        });
+        </script>
+</body>
+</html>

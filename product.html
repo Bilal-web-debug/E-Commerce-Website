@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing - E-commerce Website</title>
+    
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.search-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.search-section input {
+    padding: 10px;
+    width: 50%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.filter-section select, .filter-section input {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.filter-section input[type="range"] {
+    width: 200px;
+}
+
+#priceLabel {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.product-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+    transition: transform 0.3s;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+}
+
+.product-card h3 {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.product-card p {
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+.add-to-cart {
+    background-color: #ff6347;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.add-to-cart:hover {
+    background-color: #ff4500;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">E-Shop</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="product.html">Products</a></li>
+                <li><a href="product-detail.html">Products Detail</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Search Bar -->
+    <section class="search-section">
+        <input type="text" id="search" placeholder="Search for products..." onkeyup="filterProducts()">
+    </section>
+
+    <!-- Sorting & Filtering -->
+    <section class="filter-section">
+        <select id="categoryFilter" onchange="filterProducts()">
+            <option value="">All Categories</option>
+            <option value="category1">Category 1</option>
+            <option value="category2">Category 2</option>
+            <option value="category3">Category 3</option>
+        </select>
+
+        <input type="range" id="priceRange" min="0" max="500" value="500" onchange="filterProducts()">
+        <span id="priceLabel">Max Price: $500</span>
+
+        <select id="sortBy" onchange="sortProducts()">
+            <option value="priceAsc">Sort by Price: Low to High</option>
+            <option value="priceDesc">Sort by Price: High to Low</option>
+            <option value="popularity">Sort by Popularity</option>
+        </select>
+    </section>
+
+    <!-- Product Grid -->
+    <section class="product-grid" id="productGrid">
+        <div class="product-card" data-name="Product 1" data-category="category1" data-price="99" data-rating="4">
+            <img src="product1.jpg" alt="Product 1">
+            <h3>Product 1</h3>
+            <p>$99.99</p>
+            <p>★★★★☆</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card" data-name="Product 2" data-category="category2" data-price="149" data-rating="5">
+            <img src="product2.jpg" alt="Product 2">
+            <h3>Product 2</h3>
+            <p>$149.99</p>
+            <p>★★★★★</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card" data-name="Product 3" data-category="category3" data-price="89" data-rating="3">
+            <img src="product3.jpg" alt="Product 3">
+            <h3>Product 3</h3>
+            <p>$89.99</p>
+            <p>★★★☆☆</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <!-- Add more product cards here... -->
+    </section>
+
+    <footer>
+        <p>&copy; 2024 E-Shop. All rights reserved.</p>
+    </footer>
+
+    <script >
+        // Filter products based on the search input and category/price range filters
+function filterProducts() {
+    const searchValue = document.getElementById('search').value.toLowerCase();
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    const priceRange = document.getElementById('priceRange').value;
+    const priceLabel = document.getElementById('priceLabel');
+    priceLabel.textContent = `Max Price: $${priceRange}`;
+
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(product => {
+        const productName = product.getAttribute('data-name').toLowerCase();
+        const productCategory = product.getAttribute('data-category');
+        const productPrice = parseFloat(product.getAttribute('data-price'));
+
+        if (
+            (productName.includes(searchValue) || searchValue === '') &&
+            (categoryFilter === '' || productCategory === categoryFilter) &&
+            productPrice <= priceRange
+        ) {
+            product.style.display = 'block';
+        } else {
+            product.style.display = 'none';
+        }
+    });
+}
+
+// Sort products based on selected criteria (e.g., price or popularity)
+function sortProducts() {
+    const sortBy = document.getElementById('sortBy').value;
+    const productGrid = document.getElementById('productGrid');
+    const productCards = Array.from(document.querySelectorAll('.product-card'));
+
+    productCards.sort((a, b) => {
+        const priceA = parseFloat(a.getAttribute('data-price'));
+        const priceB = parseFloat(b.getAttribute('data-price'));
+        const ratingA = parseInt(a.getAttribute('data-rating'));
+        const ratingB = parseInt(b.getAttribute('data-rating'));
+
+        switch (sortBy) {
+            case 'priceAsc':
+                return priceA - priceB;
+            case 'priceDesc':
+                return priceB - priceA;
+            case 'popularity':
+                return ratingB - ratingA;
+            default:
+                return 0;
+        }
+    });
+
+    // Append sorted products back to the grid
+    productGrid.innerHTML = '';
+    productCards.forEach(card => productGrid.appendChild(card));
+}
+
+// Initialize filters and sorting on page load
+document.addEventListener('DOMContentLoaded', () => {
+    filterProducts();
+});
+
+    </script>
+</body>
+</html>
